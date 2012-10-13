@@ -8,14 +8,14 @@
 	<!-- =================================================================== -->
 	<aop:config>
 		<aop:aspect id="exceptiontranslatorAspect" ref="exceptiontranslator">
-			<aop:after-throwing pointcut="execution(* org.domak.aop.spring.services..*.*(..))" method="translate"
+			<aop:after-throwing pointcut="execution(* org.dmk.aop.spring.services..*.*(..))" method="translate"
 				throwing="exception" />
 		</aop:aspect>
 	</aop:config>
 
-	<bean id="exceptiontranslator" class="org.domak.aop.spring.ExceptionTranslator" />
+	<bean id="exceptiontranslator" class="org.dmk.aop.spring.ExceptionTranslator" />
 
-	<bean name="myService" class="org.domak.aop.spring.services.impl.MyServiceImpl" />
+	<bean name="myService" class="org.dmk.aop.spring.services.impl.MyServiceImpl" />
 
 </beans>
 
