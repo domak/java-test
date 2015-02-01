@@ -29,6 +29,7 @@ public final class InterThreadLatency implements Runnable {
 		System.out.println("s1 = " + s1 + ", s2 = " + s2);
 	}
 
+	@Override
 	public void run() {
 		long value = s2;
 		while (true) {

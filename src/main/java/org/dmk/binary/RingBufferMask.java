@@ -9,7 +9,7 @@ public class RingBufferMask {
 		int i = 0;
 		while (i < 10) {
 			int index = index(i);
-			System.out.println(" - " + (store[index(i)]));
+			System.out.println(" - " + (store[index]));
 			i++;
 		}
 	}

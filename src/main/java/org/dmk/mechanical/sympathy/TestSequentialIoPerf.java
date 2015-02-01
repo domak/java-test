@@ -91,9 +91,9 @@ public final class TestSequentialIoPerf {
 				}
 
 				case READ: {
-					final int checkSum = testRead(fileName);
-					if (checkSum != this.checkSum) {
-						final String msg = getName() + " expected=" + this.checkSum + " got=" + checkSum;
+					final int newCheckSum = testRead(fileName);
+					if (newCheckSum != this.checkSum) {
+						final String msg = getName() + " expected=" + this.checkSum + " got=" + newCheckSum;
 						throw new IllegalStateException(msg);
 					}
 					break;
@@ -112,6 +112,7 @@ public final class TestSequentialIoPerf {
 	}
 
 	private static PerfTestCase[] testCases = {new PerfTestCase("RandomAccessFile") {
+		@Override
 		public int testWrite(final String fileName) throws Exception {
 			RandomAccessFile file = new RandomAccessFile(fileName, "rw");
 			final byte[] buffer = new byte[PAGE_SIZE];
@@ -134,6 +135,7 @@ public final class TestSequentialIoPerf {
 			return checkSum;
 		}
 
+		@Override
 		public int testRead(final String fileName) throws Exception {
 			RandomAccessFile file = new RandomAccessFile(fileName, "r");
 			final byte[] buffer = new byte[PAGE_SIZE];
@@ -153,8 +155,10 @@ public final class TestSequentialIoPerf {
 	},
 
 	new PerfTestCase("BufferedStreamFile") {
+		@Override
 		public int testWrite(final String fileName) throws Exception {
 			int checkSum = 0;
+			@SuppressWarnings("hiding")
 			OutputStream out = new BufferedOutputStream(new FileOutputStream(fileName));
 
 			for (long i = 0; i < FILE_SIZE; i++) {
@@ -168,6 +172,7 @@ public final class TestSequentialIoPerf {
 			return checkSum;
 		}
 
+		@Override
 		public int testRead(final String fileName) throws Exception {
 			int checkSum = 0;
 			InputStream in = new BufferedInputStream(new FileInputStream(fileName));
@@ -184,6 +189,7 @@ public final class TestSequentialIoPerf {
 	},
 
 	new PerfTestCase("BufferedChannelFile") {
+		@Override
 		public int testWrite(final String fileName) throws Exception {
 			FileChannel channel = new RandomAccessFile(fileName, "rw").getChannel();
 			ByteBuffer buffer = ByteBuffer.allocate(PAGE_SIZE);
@@ -206,6 +212,7 @@ public final class TestSequentialIoPerf {
 			return checkSum;
 		}
 
+		@Override
 		public int testRead(final String fileName) throws Exception {
 			FileChannel channel = new RandomAccessFile(fileName, "rw").getChannel();
 			ByteBuffer buffer = ByteBuffer.allocate(PAGE_SIZE);
@@ -226,6 +233,7 @@ public final class TestSequentialIoPerf {
 	},
 
 	new PerfTestCase("MemoryMappedFile") {
+		@Override
 		public int testWrite(final String fileName) throws Exception {
 			FileChannel channel = new RandomAccessFile(fileName, "rw").getChannel();
 			MappedByteBuffer buffer = channel.map(READ_WRITE, 0, Math.min(channel.size(), MAX_VALUE));
@@ -246,6 +254,7 @@ public final class TestSequentialIoPerf {
 			return checkSum;
 		}
 
+		@Override
 		public int testRead(final String fileName) throws Exception {
 			FileChannel channel = new RandomAccessFile(fileName, "rw").getChannel();
 			MappedByteBuffer buffer = channel.map(READ_ONLY, 0, Math.min(channel.size(), MAX_VALUE));
