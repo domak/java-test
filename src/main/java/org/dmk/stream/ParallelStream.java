@@ -11,8 +11,7 @@ public class ParallelStream {
         synchronized (System.out) {
             System.out.println("Hello World");
             // does not work because println() is a blocking method
-            IntStream.range(0, 4).parallel().
-                    forEach(System.out::println);
+            IntStream.range(0, 4).parallel().forEach(System.out::println);
         }
     }
 }

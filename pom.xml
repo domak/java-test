@@ -46,6 +46,19 @@
         </dependency>
 
         <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-tx</artifactId>
+            <version>4.1.4.RELEASE</version>
+        </dependency>
+
+        <!-- to use @inject and @Named with spring -->
+        <dependency>
+            <groupId>javax.inject</groupId>
+            <artifactId>javax.inject</artifactId>
+            <version>1</version>
+        </dependency>
+
+        <dependency>
             <groupId>javassist</groupId>
             <artifactId>javassist</artifactId>
             <version>3.12.1.GA</version>
@@ -81,5 +94,7 @@
             <version>4.12</version>
             <scope>test</scope>
         </dependency>
+
+
     </dependencies>
 </project>
